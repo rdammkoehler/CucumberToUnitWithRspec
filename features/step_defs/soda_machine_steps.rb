@@ -7,7 +7,7 @@ Given /^an empty soda machine$/ do
 end
 
 When /^I fill the machine$/ do
-  @left_overs = @machine << Hash[ :coke, 10, :dietcoke, 10, :sprite, 10, :water, 10 ]
+  @left_overs = @machine << { :coke => 10, :dietcoke => 10, :sprite => 10, :water => 10 }
 end
 
 Then /^the machine is full$/ do
@@ -15,7 +15,7 @@ Then /^the machine is full$/ do
 end
 
 Given /^a partially full soda machine$/ do
-  @machine = SodaMachine.new Hash[ :coke, 5, :dietcoke, 5, :sprite, 5, :water, 5 ]
+  @machine = SodaMachine.new({ :coke => 5, :dietcoke => 5, :sprite => 5, :water => 5 })
 end
 
 Then /^the extra soda is not used$/ do
@@ -23,7 +23,7 @@ Then /^the extra soda is not used$/ do
 end
 
 Given /^a full soda machine$/ do
-  @machine = SodaMachine.new Hash[ :coke, 10, :dietcoke, 10, :sprite, 10, :water, 10 ]
+  @machine = SodaMachine.new({ :coke => 10, :dietcoke => 10, :sprite => 10, :water => 10 })
 end
 
 Given /^a soda machine$/ do
@@ -31,7 +31,7 @@ Given /^a soda machine$/ do
 end
 
 Given /^it has soda$/ do
-  @machine << Hash[ :coke, 10, :dietcoke, 10, :sprite, 10, :water, 10 ]
+  @machine << { :coke => 10, :dietcoke => 10, :sprite => 10, :water => 10 }
 end
 
 When /^I use exact change$/ do
@@ -63,7 +63,7 @@ Then /^I am told how much more money I need to add$/ do
 end
 
 Given /^it does not have soda$/ do
-  @machine << Hash[]
+  @machine << {}
 end
 
 Then /^I get my money back$/ do
