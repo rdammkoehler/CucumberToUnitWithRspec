@@ -19,12 +19,12 @@ Feature: Purchase Soda With Various Amounts of Money
 		  Given a soda machine
 		  And it has soda
 		  When I put in too little money
-		  Then I don't get a soda
-		  And I'm told how much more money I need to add
+		  Then I do not get a soda
+		  And I am told how much more money I need to add
 
 	Scenario: Machine is Empty
 		  Given a soda machine
-		  And it doesn't have soda
+		  And it does not have soda
 		  When I use exact change
-		  Then I don't get a soda
+		  Then I do not get a soda
 		  And I get my money back

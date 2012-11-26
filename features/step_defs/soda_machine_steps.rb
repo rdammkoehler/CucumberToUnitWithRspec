@@ -1,69 +1,71 @@
 require 'gherkin'
+$:.unshift(File.dirname(__FILE__) + '/../../lib')
+require 'soda_machine'
 
 Given /^an empty soda machine$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine = SodaMachine.new
 end
 
 When /^I fill the machine$/ do
-  pending # express the regexp above with the code you wish you had
+  @left_overs = @machine << Hash[ :coke, 10, :dietcoke, 10, :sprite, 10, :water, 10 ]
 end
 
 Then /^the machine is full$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine.should be_full
 end
 
 Given /^a partially full soda machine$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine = SodaMachine.new Hash[ :coke, 5, :dietcoke, 5, :sprite, 5, :water, 5 ]
 end
 
 Then /^the extra soda is not used$/ do
-  pending # express the regexp above with the code you wish you had
+  pending "left overs == "
 end
 
 Given /^a full soda machine$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine = SodaMachine.new Hash[ :coke, 10, :dietcoke, 10, :sprite, 10, :water, 10 ]
 end
 
 Given /^a soda machine$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine = SodaMachine.new
 end
 
 Given /^it has soda$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine << Hash[ :coke, 10, :dietcoke, 10, :sprite, 10, :water, 10 ]
 end
 
 When /^I use exact change$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine.purchase! :dietcoke, 0.75
 end
 
 Then /^I get a soda$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine.vend().should_not be_nil
 end
 
 When /^I put in too much money$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine.purchase! :dietcoke, 0.80
 end
 
 Then /^I get correct change$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine.change.should eql 0.05
 end
 
 When /^I put in too little money$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine.purchase! :dietcoke, 0.60
 end
 
-Then /^I don't get a soda$/ do
-  pending # express the regexp above with the code you wish you had
+Then /^I do not get a soda$/ do
+  @machine.vend().should be_nil
 end
 
-Then /^I'm told how much more money I need to add$/ do
-  pending # express the regexp above with the code you wish you had
+Then /^I am told how much more money I need to add$/ do
+  @machine.display.should eql 0.15
 end
 
-Given /^it doesn't have soda$/ do
-  pending # express the regexp above with the code you wish you had
+Given /^it does not have soda$/ do
+  @machine << Hash[]
 end
 
 Then /^I get my money back$/ do
-  pending # express the regexp above with the code you wish you had
+  @machine.change.should eql 0.75
 end
