@@ -12,13 +12,13 @@ class SodaMachine
   def << supplies
     extras = supplies.clone
     @supplies.merge!(supplies) { |key, orig, new| 
-      if (orig + new) > @unit_limit
-        return_value = @unit_limit
-        extras[key] = orig + new - @unit_limit
+      total_count = orig + new
+      if total_count > @unit_limit
+        extras[key] = total_count - @unit_limit
+        @unit_limit
       else
-        return_value = orig + new 
+        total_count
       end
-      return_value
     }
     extras
   end
