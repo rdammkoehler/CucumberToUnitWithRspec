@@ -42,6 +42,34 @@ class SodaMachine
     end
   end
 
+  def vend
+    rval = @vended
+    @vended = nil
+    rval
+  end
+
+  def display
+    @display
+  end
+
+  def change
+    @change
+  end
+
+  def full?
+    @supplies.delete_if { |type, count| count == @unit_limit }.empty?
+  end
+
+  def empty?
+    @supplies.delete_if { |type, count| count == 0 }.empty?
+  end
+
+  def count? type
+    @supplies[type] || 0
+  end
+
+private
+
   def display_required money
     @display = @unit_price - money
   end
@@ -81,32 +109,6 @@ class SodaMachine
 
   def add_change amount
     @change += amount
-  end
-
-  def vend
-    rval = @vended
-    @vended = nil
-    rval
-  end
-
-  def display
-    @display
-  end
-
-  def change
-    @change
-  end
-
-  def full?
-    @supplies.delete_if { |type, count| count == @unit_limit }.empty?
-  end
-
-  def empty?
-    @supplies.delete_if { |type, count| count == 0 }.empty?
-  end
-
-  def count? type
-    @supplies[type] || 0
   end
 
 end
