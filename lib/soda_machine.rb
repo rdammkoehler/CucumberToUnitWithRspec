@@ -32,9 +32,8 @@ class SodaMachine
       if balance_due? money 
         display_required money
       else
-        dispense_pop type
-        collect_payment
-        reduce_supply type
+        dispense_pop! type
+        collect_payment!
         add_change calculate_overpayment(money)
       end
     else
@@ -87,15 +86,16 @@ private
     @supplies.keys.include? type
   end
 
-  def dispense_pop type
+  def dispense_pop! type
     @vended = Pop.new type
+    reduce_supply! type
   end
 
-  def collect_payment
+  def collect_payment!
     @balance += @unit_price
   end
 
-  def reduce_supply type
+  def reduce_supply! type
     @supplies[type] -= 1 if @supplies.keys.include? type
   end
 
