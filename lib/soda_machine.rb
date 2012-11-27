@@ -1,6 +1,6 @@
 class SodaMachine
 
-  def initialize(supplies={})
+  def initialize supplies={} 
     @supplies = supplies
     @balance = 0.0
     @change = 0.0
@@ -9,24 +9,25 @@ class SodaMachine
     @unit_limit = 10
   end
 
-  def <<(supplies)
+  def << supplies
+    extras = supplies.clone
     @supplies.merge!(supplies) { |key, orig, new| 
       if (orig + new) > @unit_limit
         return_value = @unit_limit
-        supplies[key] = orig + new - @unit_limit
+        extras[key] = orig + new - @unit_limit
       else
         return_value = orig + new 
       end
       return_value
     }
-    supplies
+    extras
   end
 
   def contents
     @supplies
   end
 
-  def purchase!(type, money)
+  def purchase! type, money
     if have_supply? type 
       if balance_due? money 
         display_required money
@@ -112,7 +113,7 @@ end
 
 class Pop
 
-  def initialize(type)
+  def initialize type
     @type = type
   end
 
