@@ -59,7 +59,7 @@ Then /^I do not get a soda$/ do
 end
 
 Then /^I am told how much more money I need to add$/ do
-  @machine.display.should eql 0.15
+  (@machine.display - 0.15).abs.should <= Float::EPSILON
 end
 
 Given /^it does not have soda$/ do
