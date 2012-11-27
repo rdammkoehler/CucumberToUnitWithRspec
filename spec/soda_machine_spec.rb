@@ -133,7 +133,9 @@ describe "SodaMachine" do
   end
 
   it "should ignore negative purchase money" do
-    pending
+    loaded_machine.purchase! :coke, -0.75
+    loaded_machine.vend.should be_nil
+    loaded_machine.change.should eql 0.0
   end
 
   it "should never return less than zero change" do
