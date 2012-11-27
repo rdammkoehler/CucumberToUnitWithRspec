@@ -95,7 +95,9 @@ For me at least, starting with the feature and just trying to get things to 'go 
 
 When I wrote
 ```ruby
-@left_overs = @machine << { :coke => 10, :dietcoke => 10, :sprite =>10, :water => 10 }
+When /^I fill the machine$/ do
+  @left_overs = @machine << { :coke => 10, :dietcoke => 10, :sprite => 10, :water => 10 }
+end
 ```
 
 I _knew_ it was time to write
