@@ -139,7 +139,8 @@ describe "SodaMachine" do
   end
 
   it "should never return less than zero change" do
-    pending
+    loaded_machine.purchase! :coke, 0.60
+    loaded_machine.change.should eql 0.0
   end
 
   it "should clear the display when the correct amount of money is provided" do
