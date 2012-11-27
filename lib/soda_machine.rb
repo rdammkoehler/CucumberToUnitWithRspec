@@ -55,7 +55,9 @@ class SodaMachine
   end
 
   def change
-    as_money @change
+    dispensed = @change
+    @change = 0.0
+    as_money dispensed
   end
 
   def full?
