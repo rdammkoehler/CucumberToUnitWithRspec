@@ -1,12 +1,15 @@
 $:.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'soda_machine'
 
+UNIT_LIMIT = 10
+UNIT_PRICE = 0.75
+
 Given /^an empty soda machine$/ do
   @machine = SodaMachine.new
 end
 
 When /^I fill the machine$/ do
-  @left_overs = @machine << { :coke => 10, :dietcoke => 10, :sprite => 10, :water => 10 }
+  @left_overs = @machine << { :coke => UNIT_LIMIT, :dietcoke => UNIT_LIMIT, :sprite => UNIT_LIMIT, :water => UNIT_LIMIT }
 end
 
 Then /^the machine is full$/ do
@@ -22,7 +25,7 @@ Then /^the extra soda is not used$/ do
 end
 
 Given /^a full soda machine$/ do
-  @machine = SodaMachine.new({ :coke => 10, :dietcoke => 10, :sprite => 10, :water => 10 })
+  @machine = SodaMachine.new({ :coke => UNIT_LIMIT, :dietcoke => UNIT_LIMIT, :sprite => UNIT_LIMIT, :water => UNIT_LIMIT })
 end
 
 Given /^a soda machine$/ do
@@ -30,11 +33,11 @@ Given /^a soda machine$/ do
 end
 
 Given /^it has soda$/ do
-  @machine << { :coke => 10, :dietcoke => 10, :sprite => 10, :water => 10 }
+  @machine << { :coke => UNIT_LIMIT, :dietcoke => UNIT_LIMIT, :sprite => UNIT_LIMIT, :water => UNIT_LIMIT }
 end
 
 When /^I use exact change$/ do
-  @machine.purchase! :dietcoke, 0.75
+  @machine.purchase! :dietcoke, UNIT_PRICE
 end
 
 Then /^I get a soda$/ do
@@ -66,5 +69,5 @@ Given /^it does not have soda$/ do
 end
 
 Then /^I get my money back$/ do
-  @machine.change.should eql 0.75
+  @machine.change.should eql UNIT_PRICE
 end

@@ -2,12 +2,15 @@ require 'soda_machine'
 
 describe "SodaMachine" do
 
+  UNIT_LIMIT = 10
+  UNIT_PRICE = 0.75
+
   let(:machine) {
     SodaMachine.new
   }
 
   let(:supplies) {
-    { :coke => 10, :dietcoke => 10, :sprite => 10, :water => 10 }
+    { :coke => UNIT_LIMIT, :dietcoke => UNIT_LIMIT, :sprite => UNIT_LIMIT, :water => UNIT_LIMIT }
   }
 
   let(:loaded_machine) {
@@ -25,12 +28,12 @@ describe "SodaMachine" do
   end
 
   it "should allow purchases of soda" do
-    loaded_machine.purchase! :coke, 0.75
+    loaded_machine.purchase! :coke, UNIT_PRICE
     loaded_machine.vend.should eql Pop.new(:coke)
   end
 
   it "should accept exact change" do
-    loaded_machine.purchase! :coke, 0.75
+    loaded_machine.purchase! :coke, UNIT_PRICE
     loaded_machine.vend.should_not be_nil
   end
 
@@ -70,18 +73,18 @@ describe "SodaMachine" do
   end
 
   it "should vend purchased soda" do
-    loaded_machine.purchase! :coke, 0.75
+    loaded_machine.purchase! :coke, UNIT_PRICE
     loaded_machine.vend.should eql Pop.new(:coke)
   end
 
   it "should return money when selection is empty" do
-    machine.purchase! :coke, 0.75
-    machine.change.should eql 0.75
+    machine.purchase! :coke, UNIT_PRICE
+    machine.change.should eql UNIT_PRICE
   end
 
   it "should return money when selection does not exist" do
-    loaded_machine.purchase! :dew, 0.75
-    machine.change.should eql 0.75
+    loaded_machine.purchase! :dew, UNIT_PRICE
+    machine.change.should eql UNIT_PRICE
   end
 
   it "should accumulate change" do
@@ -98,7 +101,7 @@ describe "SodaMachine" do
   end
 
   it "should provide a count of soda by type" do
-    loaded_machine.quantity_of?(:coke).should eql 10
+    loaded_machine.quantity_of?(:coke).should eql UNIT_LIMIT
   end
 
   it "should provide a count of zero for a missing type" do
@@ -110,7 +113,7 @@ describe "SodaMachine" do
   end
 
   it "should report not full when at least one Pop consumed" do
-    loaded_machine.purchase! :coke, 0.75
+    loaded_machine.purchase! :coke, UNIT_PRICE
     loaded_machine.full?.should be_false
   end
 
@@ -124,7 +127,7 @@ describe "SodaMachine" do
   end
 
   it "should report full after reloading" do
-    loaded_machine.purchase! :coke, 0.75
+    loaded_machine.purchase! :coke, UNIT_PRICE
     loaded_machine << { :coke => 1 }
     loaded_machine.full?.should be_true
   end
