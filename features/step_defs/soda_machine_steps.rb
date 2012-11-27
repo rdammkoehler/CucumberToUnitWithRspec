@@ -47,7 +47,7 @@ When /^I put in too much money$/ do
 end
 
 Then /^I get correct change$/ do
-  (@machine.change - 0.05).should <= Float::EPSILON
+  @machine.change.should be_within(Float::EPSILON).of(0.05)
 end
 
 When /^I put in too little money$/ do
@@ -59,7 +59,7 @@ Then /^I do not get a soda$/ do
 end
 
 Then /^I am told how much more money I need to add$/ do
-  (@machine.display - 0.15).abs.should <= Float::EPSILON
+  @machine.display.should be_within(Float::EPSILON).of(0.15)
 end
 
 Given /^it does not have soda$/ do

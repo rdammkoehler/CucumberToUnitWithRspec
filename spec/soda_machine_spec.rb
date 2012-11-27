@@ -46,7 +46,7 @@ describe "SodaMachine" do
 
   it "should display the balance due" do
     loaded_machine.purchase! :coke, 0.60
-    (loaded_machine.display - 0.15).abs.should <= Float::EPSILON
+    loaded_machine.display.should be_within(Float::EPSILON).of(0.15)
   end
 
   it "should display the balance due (2)" do
@@ -56,17 +56,17 @@ describe "SodaMachine" do
 
   it "should return excess money" do
     loaded_machine.purchase! :coke, 0.80
-    (loaded_machine.change - 0.05).abs.should <= Float::EPSILON
+    loaded_machine.change.should be_within(Float::EPSILON).of(0.05)
   end
 
   it "should accept pennies" do
     loaded_machine.purchase! :coke, 0.81
-    (loaded_machine.change - 0.06).abs.should <= Float::EPSILON
+    loaded_machine.change.should be_within(Float::EPSILON).of(0.06)
   end
 
   it "should return pennies" do
     loaded_machine.purchase! :coke, 0.76
-    (loaded_machine.change - 0.01).abs.should <= Float::EPSILON
+    loaded_machine.change.should be_within(Float::EPSILON).of(0.01)
   end
 
   it "should vend purchased soda" do
