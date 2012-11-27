@@ -1,20 +1,21 @@
 class SodaMachine
 
+  UNIT_LIMIT = 10
+  UNIT_PRICE = 75
+
   def initialize supplies={} 
     @supplies = supplies
     @change = 0.0
     @display = 0.0
-    @unit_price = 75
-    @unit_limit = 10
   end
 
   def << supplies
     extras = supplies.clone
     @supplies.merge!(supplies) { |key, have, add| 
       total_count = have + add
-      if total_count > @unit_limit
-        extras[key] = total_count - @unit_limit
-        @unit_limit
+      if total_count > UNIT_LIMIT
+        extras[key] = total_count - UNIT_LIMIT
+        UNIT_LIMIT
       else
         total_count
       end
@@ -55,7 +56,7 @@ class SodaMachine
   end
 
   def full?
-    @supplies.delete_if { |type, count| count == @unit_limit }.empty?
+    @supplies.delete_if { |type, count| count == UNIT_LIMIT }.empty?
   end
 
   def empty?
@@ -77,11 +78,11 @@ private
   end
 
   def display_required pennies
-    @display = as_money(@unit_price - pennies)
+    @display = as_money(UNIT_PRICE - pennies)
   end
 
   def balance_due? pennies
-    pennies < @unit_price
+    pennies < UNIT_PRICE
   end
 
   def have_supply? type
@@ -103,7 +104,7 @@ private
   end
 
   def calculate_overpayment amount_paid
-    max(0, amount_paid - @unit_price)
+    max(0, amount_paid - UNIT_PRICE)
   end
 
   def max a, b
