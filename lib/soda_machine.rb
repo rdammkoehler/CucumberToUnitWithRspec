@@ -2,7 +2,6 @@ class SodaMachine
 
   def initialize supplies={} 
     @supplies = supplies
-    @balance = 0.0
     @change = 0.0
     @display = 0.0
     @unit_price = 0.75
@@ -33,7 +32,6 @@ class SodaMachine
         display_required money
       else
         dispense_pop! type
-        collect_payment!
         add_change calculate_overpayment(money)
       end
     else
@@ -89,10 +87,6 @@ private
   def dispense_pop! type
     @vended = Pop.new type
     reduce_supply! type
-  end
-
-  def collect_payment!
-    @balance += @unit_price
   end
 
   def reduce_supply! type
