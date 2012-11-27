@@ -5,6 +5,7 @@ class SodaMachine
 
   def initialize supplies={} 
     @supplies = supplies
+    @vended = []
     @change = 0.0
     @display = 0.0
   end
@@ -42,9 +43,7 @@ class SodaMachine
   end
 
   def vend
-    rval = @vended
-    @vended = nil
-    rval
+    @vended.pop
   end
 
   def display
@@ -95,7 +94,7 @@ private
   end
 
   def dispense_pop! type
-    @vended = Pop.new type
+    @vended.push Pop.new(type)
     reduce_supply! type
   end
 

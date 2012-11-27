@@ -132,4 +132,24 @@ describe "SodaMachine" do
     loaded_machine.full?.should be_true
   end
 
+  it "should ignore negative purchase money" do
+    pending
+  end
+
+  it "should never return less than zero change" do
+    pending
+  end
+
+  it "should clear the display when the correct amount of money is provided" do
+    pending
+  end
+
+  it "should add the input money to the change on purchase if vend wasn't called" do
+    pending
+  end
+
+  it "should zero out change after change is called" do
+    pending
+  end
+
 end
