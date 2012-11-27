@@ -8,6 +8,7 @@ class SodaMachine
     @vended = []
     @change = 0.0
     @display = 0.0
+    @balance = 0.0
   end
 
   def << supplies
@@ -32,10 +33,13 @@ class SodaMachine
     pennies = as_pennies money
     if have_supply? type 
       if balance_due? pennies
+        @balance = pennies
         display_required pennies
       else
         dispense_pop! type
+        clear_amount_due
         add_change calculate_overpayment(pennies)
+        @balance = 0.0
       end
     else
       add_change pennies
@@ -68,6 +72,10 @@ class SodaMachine
 
 private
 
+  def clear_amount_due
+    @display = 0.0
+  end
+
   def as_pennies money
     (money * 100).to_i
   end
@@ -81,7 +89,7 @@ private
   end
 
   def balance_due? pennies
-    pennies < UNIT_PRICE
+    (@balance + pennies) < UNIT_PRICE
   end
 
   def have_supply? type

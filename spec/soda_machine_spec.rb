@@ -144,7 +144,11 @@ describe "SodaMachine" do
   end
 
   it "should clear the display when the correct amount of money is provided" do
-    pending
+    loaded_machine.display.should eql 0.0
+    loaded_machine.purchase! :coke, 0.50
+    loaded_machine.display.should eql 0.25
+    loaded_machine.purchase! :coke, 0.25
+    loaded_machine.display.should eql 0.0
   end
 
   it "should add the input money to the change on purchase if vend wasn't called" do
