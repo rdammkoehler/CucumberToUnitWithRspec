@@ -98,11 +98,11 @@ describe "SodaMachine" do
   end
 
   it "should provide a count of soda by type" do
-    loaded_machine.count?(:coke).should eql 10
+    loaded_machine.quantity_of?(:coke).should eql 10
   end
 
   it "should provide a count of zero for a missing type" do
-    loaded_machine.count?(:dew).should eql 0
+    loaded_machine.quantity_of?(:dew).should eql 0
   end
 
   it "should provide and indicator for full" do

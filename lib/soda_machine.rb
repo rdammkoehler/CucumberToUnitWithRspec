@@ -64,7 +64,7 @@ class SodaMachine
     @supplies.delete_if { |type, count| count == 0 }.empty?
   end
 
-  def count? type
+  def quantity_of? type
     @supplies[type] || 0
   end
 
@@ -80,7 +80,7 @@ private
 
   def have_supply? type
     have?(type) and 
-      count?(type) > 0
+      quantity_of?(type) > 0
   end
 
   def have? type
