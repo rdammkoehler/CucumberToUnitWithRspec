@@ -11,8 +11,8 @@ class SodaMachine
 
   def << supplies
     extras = supplies.clone
-    @supplies.merge!(supplies) { |key, orig, new| 
-      total_count = orig + new
+    @supplies.merge!(supplies) { |key, have, add| 
+      total_count = have + add
       if total_count > @unit_limit
         extras[key] = total_count - @unit_limit
         @unit_limit
