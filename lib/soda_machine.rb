@@ -4,6 +4,7 @@ class SodaMachine
     @supplies = supplies
     @balance = 0.0
     @change = 0.0
+    @display = 0.0
     @unit_price = 0.75
     @unit_limit = 10
   end
@@ -33,6 +34,8 @@ class SodaMachine
         @balance += money
         @supplies[type] -= 1
         @change += money - @unit_price
+      else
+        @display = @unit_price - money
       end
     else
       @change += money
@@ -46,7 +49,7 @@ class SodaMachine
   end
 
   def display
-    0.15
+    @display
   end
 
   def change
@@ -56,7 +59,6 @@ class SodaMachine
   def full?
     rval = true
     @supplies.keys.each { |type| 
-#      puts "#{rval} #{type} #{count?(type)}"
       rval &= count?(type) == @unit_limit }
     rval
   end

@@ -46,7 +46,12 @@ describe "SodaMachine" do
 
   it "should display the balance due" do
     loaded_machine.purchase! :coke, 0.60
-    loaded_machine.display.should eql 0.15
+    (loaded_machine.display - 0.15).abs.should <= Float::EPSILON
+  end
+
+  it "should display the balance due (2)" do
+    loaded_machine.purchase! :coke, 0.50
+    loaded_machine.display.should eql 0.25
   end
 
   it "should return excess money" do
@@ -71,6 +76,11 @@ describe "SodaMachine" do
 
   it "should return money when selection is empty" do
     machine.purchase! :coke, 0.75
+    machine.change.should eql 0.75
+  end
+
+  it "should return money when selection does not exist" do
+    loaded_machine.purchase! :dew, 0.75
     machine.change.should eql 0.75
   end
 
