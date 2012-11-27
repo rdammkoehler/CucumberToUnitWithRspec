@@ -23,7 +23,7 @@ class SodaMachine
   end
 
   def contents
-    @supplies
+    @supplies.clone.freeze
   end
 
   def purchase! type, money
