@@ -1,16 +1,48 @@
 class SodaMachine
 
   def initialize(supplies={})
+    @supplies = supplies
+    @balance = 0.0
+    @change = 0.0
+    @unit_price = 0.75
+    @unit_limit = 10
   end
 
   def <<(supplies)
+    @supplies.merge!(supplies) { |k, o, n| 
+      if (o + n) > @unit_limit
+        r = @unit_limit
+        supplies[k] = o + n - @unit_limit
+      else
+        r = o + n 
+      end
+      r
+    }
+    supplies
+  end
+
+  def contents
+    @supplies
   end
 
   def purchase!(type, money)
+    if @supplies.keys.include? type and 
+        @supplies[type] > 0 
+      if money >= @unit_price
+        @vended = Pop.new(type)
+        @balance += money
+        @supplies[type] -= 1
+        @change += money - @unit_price
+      end
+    else
+      @change += money
+    end
   end
 
   def vend
-    nil
+    rval = @vended
+    @vended = nil
+    rval
   end
 
   def display
@@ -18,10 +50,41 @@ class SodaMachine
   end
 
   def change
-    0.75
+    @change
   end
 
   def full?
-    false
+    rval = true
+    @supplies.keys.each { |type| 
+#      puts "#{rval} #{type} #{count?(type)}"
+      rval &= count?(type) == @unit_limit }
+    rval
   end
+
+  def empty?
+    rval = true
+    @supplies.keys.each { |type| rval &= count?(type) == 0 }
+    rval
+  end
+
+  def count? type
+    @supplies[type] || 0
+  end
+
+end
+
+class Pop
+
+  def initialize(type)
+    @type = type
+  end
+
+  def type
+    @type
+  end
+
+  def eql? other
+    @type == other.type
+  end
+
 end

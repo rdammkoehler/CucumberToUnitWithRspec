@@ -19,7 +19,7 @@ Given /^a partially full soda machine$/ do
 end
 
 Then /^the extra soda is not used$/ do
-  pending "left overs == "
+  @left_overs.should eql Hash[ :coke => 5, :dietcoke => 5, :sprite => 5, :water => 5 ]
 end
 
 Given /^a full soda machine$/ do
@@ -47,7 +47,7 @@ When /^I put in too much money$/ do
 end
 
 Then /^I get correct change$/ do
-  @machine.change.should eql 0.05
+  (@machine.change - 0.05).should <= Float::EPSILON
 end
 
 When /^I put in too little money$/ do
