@@ -10,14 +10,14 @@ class SodaMachine
   end
 
   def <<(supplies)
-    @supplies.merge!(supplies) { |k, o, n| 
-      if (o + n) > @unit_limit
-        r = @unit_limit
-        supplies[k] = o + n - @unit_limit
+    @supplies.merge!(supplies) { |key, orig, new| 
+      if (orig + new) > @unit_limit
+        return_value = @unit_limit
+        supplies[key] = orig + new - @unit_limit
       else
-        r = o + n 
+        return_value = orig + new 
       end
-      r
+      return_value
     }
     supplies
   end
@@ -27,19 +27,59 @@ class SodaMachine
   end
 
   def purchase!(type, money)
-    if @supplies.keys.include? type and 
-        @supplies[type] > 0 
-      if money >= @unit_price
-        @vended = Pop.new(type)
-        @balance += money
-        @supplies[type] -= 1
-        @change += money - @unit_price
+    if have_supply? type 
+      if balance_due? money 
+        display_required money
       else
-        @display = @unit_price - money
+        dispense_pop type
+        collect_payment
+        reduce_supply type
+        add_change calculate_overpayment(money)
       end
     else
-      @change += money
+      add_change money
     end
+  end
+
+  def display_required money
+    @display = @unit_price - money
+  end
+
+  def balance_due? money
+    money < @unit_price
+  end
+
+  def have_supply? type
+    have?(type) and 
+      count?(type) > 0
+  end
+
+  def have? type
+    @supplies.keys.include? type
+  end
+
+  def dispense_pop type
+    @vended = Pop.new type
+  end
+
+  def collect_payment
+    @balance += @unit_price
+  end
+
+  def reduce_supply type
+    @supplies[type] -= 1 if @supplies.keys.include? type
+  end
+
+  def calculate_overpayment amount_paid
+    max(0, amount_paid - @unit_price)
+  end
+
+  def max a, b
+    a > b ? a : b
+  end
+
+  def add_change amount
+    @change += amount
   end
 
   def vend
@@ -57,16 +97,11 @@ class SodaMachine
   end
 
   def full?
-    rval = true
-    @supplies.keys.each { |type| 
-      rval &= count?(type) == @unit_limit }
-    rval
+    @supplies.delete_if { |type, count| count == @unit_limit }.empty?
   end
 
   def empty?
-    rval = true
-    @supplies.keys.each { |type| rval &= count?(type) == 0 }
-    rval
+    @supplies.delete_if { |type, count| count == 0 }.empty?
   end
 
   def count? type
