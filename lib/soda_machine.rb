@@ -27,16 +27,16 @@ class SodaMachine
   end
 
   def purchase! type, money
-    money = (money*100).to_i
+    pennies = as_pennies money
     if have_supply? type 
-      if balance_due? money 
-        display_required money
+      if balance_due? pennies
+        display_required pennies
       else
         dispense_pop! type
-        add_change calculate_overpayment(money)
+        add_change calculate_overpayment(pennies)
       end
     else
-      add_change money
+      add_change pennies
     end
   end
 
@@ -68,16 +68,20 @@ class SodaMachine
 
 private
 
-  def as_money number
-    (number.to_f / 100.0).to_f
+  def as_pennies money
+    (money * 100).to_i
   end
 
-  def display_required money
-    @display = as_money(@unit_price - money)
+  def as_money pennies
+    (pennies.to_f / 100.0).to_f
   end
 
-  def balance_due? money
-    money < @unit_price
+  def display_required pennies
+    @display = as_money(@unit_price - pennies)
+  end
+
+  def balance_due? pennies
+    pennies < @unit_price
   end
 
   def have_supply? type
