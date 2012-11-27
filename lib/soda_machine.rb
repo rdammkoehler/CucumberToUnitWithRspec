@@ -4,7 +4,7 @@ class SodaMachine
     @supplies = supplies
     @change = 0.0
     @display = 0.0
-    @unit_price = 0.75
+    @unit_price = 75
     @unit_limit = 10
   end
 
@@ -27,6 +27,7 @@ class SodaMachine
   end
 
   def purchase! type, money
+    money = (money*100).to_i
     if have_supply? type 
       if balance_due? money 
         display_required money
@@ -50,7 +51,7 @@ class SodaMachine
   end
 
   def change
-    @change
+    as_money @change
   end
 
   def full?
@@ -67,8 +68,12 @@ class SodaMachine
 
 private
 
+  def as_money number
+    (number.to_f / 100.0).to_f
+  end
+
   def display_required money
-    @display = @unit_price - money
+    @display = as_money(@unit_price - money)
   end
 
   def balance_due? money

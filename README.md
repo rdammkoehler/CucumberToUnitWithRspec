@@ -82,6 +82,12 @@ machine.change.should be_within(Float::EPSILON).of(0.05)
 
 Honestly that's only nominally better in my opinion. 
 
+So at lunch someone suggested that I convert the inputs to integers, do all my math with them, and return decimal 'money' like always. This resulted in assertions like this;
+
+```ruby
+machine.change.should be 0.05
+```
+
 Once I was satisfied with the code I added a Rake file so I could stop typing 
 
 ```bash
