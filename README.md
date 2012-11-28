@@ -88,6 +88,28 @@ So at lunch someone suggested that I convert the inputs to integers, do all my m
 machine.change.should be 0.05
 ```
 
+So I did this. First I added a method _as_pennies_money_
+
+```ruby
+  def as_pennies money
+    (money * 100).to_i
+  end
+```
+
+And applied it to the input for _purchase!_type,_money_. Then I created the method _as_money_pennies_ and applied it to the outputs for _change_ and _display_required_pennies_.
+
+```ruby
+  def as_money pennies
+    (pennies.to_f / 100.0).to_f
+  end
+```
+
+I also had to change the constant _UNIT_PRICE_ from 0.75 to 75. Having done that I was able to get a nice clean assertion in steps and spec files. 
+
+Along the way numerous other refactors and redesigns occured. The public API pretty much stayed the same throughout, though I did change _count_ to _quantity_of?_ to improve readability.
+
+I also introduced various constants, added a few more tests for things I didn't think of and generally made the code as clean as I could.
+
 Once I was satisfied with the code I added a Rake file so I could stop typing 
 
 ```bash
