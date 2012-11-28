@@ -138,6 +138,21 @@ I _knew_ it was time to write
   end
 ```
 
+What was my congnitive process here? Good question. I've been struggling to articulate it. 
+
+1. I had the feature file for purchase. 
+1. I created the steps file
+1. I started filling in the _pending_ sections of the steps.
+1. Each time I added a step I tried running the cucumber.
+1. When cucumber failed because the associated code didn't exist, I created it. (Just like TDD)
+1. For each new bit of code I attempted to test drive that code by creating a spec for it. (I admit that I had a preconceived notion of what the unit tests would be, but I found that my preconceived idea was incomplete, as usual). 
+1. After creating the code to get cucumber and the assocaiated specs green I moved on to the next step.
+1. After completing the cucumber and specs I reviewed to see what I'd missed. (Boy do I wish I had a pair while doing this)
+1. Afer plugging as many holes as I could find I started cleaning up the code, shaping it as best I could (at this point I did get a pair, sort of)
+1. Then I went back and reviewed my feature files, steps file, and spec file both for cleanliness and completelness. This led to lots of little actions like the design change to use integers internally, defining constants, renaming things etc.
+
+So I feel like I've watered down the 'cognative' process to a mechanical one. But practicing the mechanical one I suspect will reveal what's going on in my head.
+
 
 The end.
 
